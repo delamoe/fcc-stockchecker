@@ -33,7 +33,7 @@ suite('Functional Tests', function() {
         
       });
       
-      test('1 stock with like again (ensure likes arent double counted)', function(done) {
+      test('1 stock with like again (ensure likes aren\'t double counted)', function(done) {
         
       });
       
