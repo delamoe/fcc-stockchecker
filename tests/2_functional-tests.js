@@ -17,13 +17,13 @@ suite('Functional Tests', function () {
 
   suite('GET /api/stock-prices => stockData object', function () {
 
-    /* test('1 stock', function (done) {
+    test('1 stock', function (done) {
       chai.request(server)
         .get('/api/stock-prices')
         .query({ stock: 'goog' })
         .end(function (err, res) {
           assert.equal(res.status, 200);
-          console.log(res.body.stockData);
+          console.log(res.body);
           assert.property(res.body, 'stockData', 'the body should contain an object with a property stockData');
           assert.property(res.body.stockData, 'stock', 'there should be a property stock');
           assert.property(res.body.stockData, 'price', 'there should be a property price');
@@ -33,7 +33,7 @@ suite('Functional Tests', function () {
 
           done();
         });
-    }); */
+    });
 
     /*  test('1 stock with like', function(done) {
        
@@ -51,6 +51,10 @@ suite('Functional Tests', function () {
         .end(function (err, res) {
           console.log(res.body);
           assert.property(res.body, 'stockData', 'the body should contain an object with a property stockData');
+          assert.isArray(res.body.stockData);
+          assert.property(res.body.stockData[1], 'stock', 'there should be a property stock');
+          assert.property(res.body.stockData[1], 'price', 'there should be a property price');
+          assert.property(res.body.stockData[1], 'rel_likes', 'there should be a property rel_likes');
 
           //complete this one too
 

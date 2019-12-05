@@ -21,18 +21,24 @@ module.exports = function (app) {
       var ip = req.ip;
       // console.log(req.query.stock, typeof req.query.stock);
       var stocks = [];
-      if (typeof req.query.stock === 'string') stocks.push(req.query.stock);
-      else stocks = [...req.query.stock];
-      // console.log(stocks, typeof stocks);
-      var stockUrls = stocks.map(stock => `https://repeated-alpaca.glitch.me/v1/stock/${stock}/quote`);
-      // console.log(stockUrls);
+      if (Array.isArray(req.query.stock)) stocks = req.query.stock;
+      else stocks.push(req.query.stock);
 
-      var stockData = [];
       Promise.all(stocks.map(stock => fetch(`https://repeated-alpaca.glitch.me/v1/stock/${stock}/quote`)))
-        .then(data => Promise.all(data.map(datum => datum.json())))
+        .then(data => Promise.all(data.map(data => data.json())))
         .then(stockData => {
           var result = stockData.map(stock => {
-            return { "stock": stock.symbol, "price": `${stock.latestPrice}`, "likes": "TwoDo" }
+            return stockData.length === 1 ?
+              {
+                "stock": stock.symbol,
+                "price": `${stock.latestPrice}`,
+                "likes": "TwoDo"
+              } :
+              {
+                "stock": stock.symbol,
+                "price": `${stock.latestPrice}`,
+                "rel_likes": "TwoDo"
+              };
           });
           res.json({ "stockData": result.length < 2 ? result[0] : result });
         });
