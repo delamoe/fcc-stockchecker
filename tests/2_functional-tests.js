@@ -18,6 +18,7 @@ suite('Functional Tests', function () {
   suite('GET /api/stock-prices => stockData object', function () {
 
     test('1 stock', function (done) {
+      this.timeout(15000);
       chai.request(server)
         .get('/api/stock-prices')
         .query({ stock: 'goog' })
@@ -44,7 +45,7 @@ suite('Functional Tests', function () {
      }); */
 
     test('2 stocks', function (done) {
-
+      this.timeout(15000);
       chai.request(server)
         .get('/api/stock-prices')
         .query({ stock: ['goog', 'msft'] })
