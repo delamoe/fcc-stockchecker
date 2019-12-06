@@ -21,7 +21,7 @@ suite('Functional Tests', function () {
       this.timeout(15000);
       chai.request(server)
         .get('/api/stock-prices')
-        .query({ stock: 'goog' })
+        .query({ stock: 'aapl' })
         .end(function (err, res) {
           assert.equal(res.status, 200);
           console.log(res.body);
@@ -36,13 +36,45 @@ suite('Functional Tests', function () {
         });
     });
 
-    /*  test('1 stock with like', function(done) {
-       
-     }); */
+    test('1 stock with like', function (done) {
+      this.timeout(15000);
+      chai.request(server)
+        .get('/api/stock-prices')
+        .query({ stock: 'goog', like: true })
+        .end(function (err, res) {
+          assert.equal(res.status, 200);
+          console.log(res.body);
+          assert.property(res.body, 'stockData', 'the body should contain an object with a property stockData');
+          assert.property(res.body.stockData, 'stock', 'there should be a property stock');
+          assert.property(res.body.stockData, 'price', 'there should be a property price');
+          assert.property(res.body.stockData, 'likes', 'there should be a property likes');
 
-    /*  test('1 stock with like again (ensure likes aren\'t double counted)', function(done) {
-       
-     }); */
+          //complete this one too
+
+          done();
+        });
+
+    });
+
+    test('1 stock with like again (ensure likes aren\'t double counted)', function (done) {
+      this.timeout(15000);
+      chai.request(server)
+        .get('/api/stock-prices')
+        .query({ stock: 'goog', like: true })
+        .end(function (err, res) {
+          assert.equal(res.status, 200);
+          console.log(res.body);
+          assert.property(res.body, 'stockData', 'the body should contain an object with a property stockData');
+          assert.property(res.body.stockData, 'stock', 'there should be a property stock');
+          assert.property(res.body.stockData, 'price', 'there should be a property price');
+          assert.property(res.body.stockData, 'likes', 'there should be a property likes');
+
+          //complete this one too
+
+          done();
+        });
+
+    });
 
     test('2 stocks', function (done) {
       this.timeout(15000);
@@ -63,10 +95,26 @@ suite('Functional Tests', function () {
         });
     });
 
-    /*  test('2 stocks with like', function(done) {
-       
-     }); */
+    test('2 stocks with like', function (done) {
+      this.timeout(15000);
+      chai.request(server)
+        .get('/api/stock-prices')
+        .query({ stock: ['goog', 'msft'], like: true})
+      .end(function (err, res) {
+        console.log(res.body);
+        assert.property(res.body, 'stockData', 'the body should contain an object with a property stockData');
+        assert.isArray(res.body.stockData);
+        assert.property(res.body.stockData[1], 'stock', 'there should be a property stock');
+        assert.property(res.body.stockData[1], 'price', 'there should be a property price');
+        assert.property(res.body.stockData[1], 'rel_likes', 'there should be a property rel_likes');
+
+        //complete this one too
+
+        done();
+      });
 
   });
+
+});
 
 });
