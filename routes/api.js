@@ -21,9 +21,9 @@ module.exports = function (app) {
       var ip = req.ip;
       console.log('req.query: ', req.query);
       var stocks = [];
-      if (Array.isArray(req.query.stock)) stocks = req.query.stock;
-      else stocks.push(req.query.stock);
-      // console.log(stocks, typeof stocks);
+      if (Array.isArray(req.query.stock)) stocks = req.query.stock.map(stock => stock.toUpperCase());
+      else stocks.push(req.query.stock.toUpperCase());
+      console.log('stocks (should be uppercase) ', stocks);
 
 
       Promise.all(stocks.map(stock => fetch(`https://repeated-alpaca.glitch.me/v1/stock/${stock}/quote`)))
@@ -48,7 +48,7 @@ module.exports = function (app) {
             // [likedBy].push(req.ip)
             // }
             console.log('req.ip: ', req.ip);
-            
+
             var stockUpdate = stock_db.updateMany(
               { symbol: { $in: stocks }, likedBy: { $not: { $eq: req.ip } } },
               {
