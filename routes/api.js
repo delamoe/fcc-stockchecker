@@ -18,8 +18,8 @@ module.exports = function (app) {
 
   app.route('/api/stock-prices')
     .get(function (req, res) {
-      console.log('req.ip: ', req.ip);
-      console.log('req.query: ', req.query);
+      // console.log('req.ip: ', req.ip);
+      // console.log('req.query: ', req.query);
       var stocks = [];
       if (Array.isArray(req.query.stock)) stocks = req.query.stock.map(stock => stock.toUpperCase());
       else stocks.push(req.query.stock.toUpperCase());
@@ -60,7 +60,7 @@ module.exports = function (app) {
                     {
                       "stock": stock.symbol,
                       "price": ` ${stock.latestPrice}`,
-                      "rel_likes": index < 1 ? (likeInfo[0].likes || 0) - (likeInfo[1].likes || 0) : (likeInfo[1].likes || 0) - (likeInfo[0].likes || 0) // this does not work right
+                      "rel_likes": index < 1 ? (likeInfo[0].likes || 0) - (likeInfo[1].likes || 0) : (likeInfo[1].likes || 0) - (likeInfo[0].likes || 0)
                     };
                 });
                 res.json({ "stockData": result.length < 2 ? result[0] : result });

@@ -30,10 +30,6 @@ suite('Functional Tests', function () {
           assert.property(res.body.stockData, 'price', 'there should be a property price');
           assert.property(res.body.stockData, 'likes', 'there should be a property likes');
           done();
-          /* chai.request(server)
-            .delete('api/stock-prices')
-            .query({ stock: 'aapl' })
-            .end(() => done()); */
         });
     });
 
@@ -112,6 +108,10 @@ suite('Functional Tests', function () {
           //complete this one too
 
           done();
+          /* chai.request(server)
+            .delete('api/stock-prices')
+            .query({ stock: ['aapl', 'goog', 'msft'] })
+            .end(() => done()); */
         });
 
     });
