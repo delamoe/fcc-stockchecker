@@ -25,6 +25,8 @@ module.exports = function (app) {
       else stocks.push(req.query.stock.toUpperCase());
 
       Promise.all(stocks.map(stock => fetch(`https://repeated-alpaca.glitch.me/v1/stock/${stock}/quote`)))
+      // TODO
+      // UnhandledPromiseRejectionWarning: FetchError: invalid json response body at https://repeated-alpaca.glitch.me/v1/stock/MSFT/quote reason: Unexpected token < in JSON at position 0
         .then(data => Promise.all(data.map(data => data.json())))
         .then(stockData => {
           MongoClient.connect(MONGODB_CONNECTION_STRING, { useUnifiedTopology: true }, function (err, db) {
