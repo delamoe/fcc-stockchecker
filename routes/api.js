@@ -24,11 +24,12 @@ module.exports = function (app) {
       if (Array.isArray(req.query.stock)) stocks = req.query.stock.map(stock => stock.toUpperCase());
       else stocks.push(req.query.stock.toUpperCase());
 
+      var retries = 5;
+      function run() {
       Promise.all(stocks.map(stock => fetch(`https://repeated-alpaca.glitch.me/v1/stock/${stock}/quote`)))
-      // TODO
-      // UnhandledPromiseRejectionWarning: FetchError: invalid json response body at https://repeated-alpaca.glitch.me/v1/stock/MSFT/quote reason: Unexpected token < in JSON at position 0
         .then(data => Promise.all(data.map(data => data.json())))
         .then(stockData => {
+          // console.log('stockData: ', stockData);
           MongoClient.connect(MONGODB_CONNECTION_STRING, { useUnifiedTopology: true }, function (err, db) {
             if (err) return console.error(err);
             var stock_db = db.db('test').collection('stock_db');
@@ -70,19 +71,24 @@ module.exports = function (app) {
               db.close();
             })/* .finally(); */
           })
-        })
+        }, err => {
+          console.error('err: ', err);
+          --retries;
+          if (retries > 0) run();
+        })}
+        run();
     })
-    /* .delete(function (req, res) {
-      MongoClient.connect(MONGODB_CONNECTION_STRING, { useUnifiedTopology: true }, function (err, db) {
-        if (err) return console.error(err);
-        var stock_db = db.db('test').collection('stock_db');
-        var stocks = [];
-        if (Array.isArray(req.query.stock)) stocks = req.query.stock.map(stock => stock.toUpperCase());
-        else stocks.push(req.query.stock.toUpperCase());
+  /* .delete(function (req, res) {
+    MongoClient.connect(MONGODB_CONNECTION_STRING, { useUnifiedTopology: true }, function (err, db) {
+      if (err) return console.error(err);
+      var stock_db = db.db('test').collection('stock_db');
+      var stocks = [];
+      if (Array.isArray(req.query.stock)) stocks = req.query.stock.map(stock => stock.toUpperCase());
+      else stocks.push(req.query.stock.toUpperCase());
 
-        stocks.forEach(stock => stock_db.deleteOne({ symbol: stock })
-          .then(data => console.log(data))
-          .then(() => db.close()));
-      })
-    }) */
+      stocks.forEach(stock => stock_db.deleteOne({ symbol: stock })
+        .then(data => console.log(data))
+        .then(() => db.close()));
+    })
+  }) */
 };
