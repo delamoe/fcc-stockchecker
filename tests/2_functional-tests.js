@@ -105,7 +105,7 @@ suite('Functional Tests', function () {
 
   });
 
-  suite('DELETE /api/stock-prices => deletes all stockData test objects', function () {
+  /* suite('DELETE /api/stock-prices => deletes all stockData test objects', function () {
     test('delete all test stocks', function (done) {
       chai.request(server)
         .delete('/api/stock-prices')
@@ -115,6 +115,6 @@ suite('Functional Tests', function () {
           done();
         });
     });
-  });
+  }); */
 
 });

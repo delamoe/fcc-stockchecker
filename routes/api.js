@@ -80,7 +80,7 @@ module.exports = function (app) {
       }
       run();
     })
-    .delete(function (req, res) {
+    /* .delete(function (req, res) {
       MongoClient.connect(MONGODB_CONNECTION_STRING, { useUnifiedTopology: true }, function (err, db) {
         if (err) return console.error(err);
         var stock_db = db.db('test').collection('stock_db_TEST');
@@ -91,6 +91,6 @@ module.exports = function (app) {
           })
           .then(() => db.close());
       })
-    });
+    }); */
 
 };
