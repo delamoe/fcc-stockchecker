@@ -52,7 +52,7 @@ module.exports = function (app) {
                 stock_db.find(
                   { symbol: { $in: stocks } })
                   .toArray().then(likeInfo => {
-                  likeInfo.map(data => console.log('likeInfo: ', data));
+                  // likeInfo.map(data => console.log('likeInfo: ', data));
                   var result = stockData.map((stock, index) => {
                     return stockData.length === 1 ?
                       {
