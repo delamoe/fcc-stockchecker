@@ -49,10 +49,10 @@ module.exports = function (app) {
                     })
                   : 0,
               ]).then(() => {
-                var stockInfo = stock_db.find(
-                  { symbol: { $in: stocks } });
-
-                stockInfo.toArray().then(likeInfo => {
+                stock_db.find(
+                  { symbol: { $in: stocks } })
+                  .toArray().then(likeInfo => {
+                  likeInfo.map(data => console.log('likeInfo: ', data));
                   var result = stockData.map((stock, index) => {
                     return stockData.length === 1 ?
                       {
@@ -67,7 +67,8 @@ module.exports = function (app) {
                       };
                   });
                   res.json({ "stockData": result.length < 2 ? result[0] : result });
-                });
+                },err => console.error(err)
+                );
                 db.close();
               })/* .finally(); */
             })

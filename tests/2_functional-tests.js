@@ -24,7 +24,7 @@ suite('Functional Tests', function () {
         .query({ stock: 'aapl', test: true })
         .end(function (err, res) {
           assert.equal(res.status, 200);
-          // console.log(res.body);
+          console.log(res.body);
           assert.property(res.body, 'stockData', 'the body should contain an object with a property stockData');
           assert.property(res.body.stockData, 'stock', 'there should be a property stock');
           assert.property(res.body.stockData, 'price', 'there should be a property price');
@@ -40,7 +40,7 @@ suite('Functional Tests', function () {
         .query({ stock: 'goog', like: true, test: true })
         .end(function (err, res) {
           assert.equal(res.status, 200);
-          // console.log(res.body);
+          console.log(res.body);
           assert.property(res.body, 'stockData', 'the body should contain an object with a property stockData');
           assert.property(res.body.stockData, 'stock', 'there should be a property stock');
           assert.property(res.body.stockData, 'price', 'there should be a property price');
@@ -58,7 +58,7 @@ suite('Functional Tests', function () {
         .query({ stock: 'goog', like: true, test: true })
         .end(function (err, res) {
           assert.equal(res.status, 200);
-          // console.log(res.body);
+          console.log(res.body);
           assert.property(res.body, 'stockData', 'the body should contain an object with a property stockData');
           assert.property(res.body.stockData, 'stock', 'there should be a property stock');
           assert.property(res.body.stockData, 'price', 'there should be a property price');
@@ -75,7 +75,7 @@ suite('Functional Tests', function () {
         .get('/api/stock-prices')
         .query({ stock: ['goog', 'msft'], test: true })
         .end(function (err, res) {
-          // console.log(res.body);
+          console.log(res.body);
           assert.property(res.body, 'stockData', 'the body should contain an object with a property stockData');
           assert.isArray(res.body.stockData);
           assert.property(res.body.stockData[1], 'stock', 'there should be a property stock');
@@ -91,7 +91,7 @@ suite('Functional Tests', function () {
         .get('/api/stock-prices')
         .query({ stock: ['goog', 'msft'], like: true, test: true })
         .end(function (err, res) {
-          // console.log(res.body);
+          console.log(res.body);
           assert.property(res.body, 'stockData', 'the body should contain an object with a property stockData');
           assert.isArray(res.body.stockData);
           assert.property(res.body.stockData[1], 'stock', 'there should be a property stock');
